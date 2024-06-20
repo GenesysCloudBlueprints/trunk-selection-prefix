@@ -10,27 +10,24 @@ This is a blueprint is a solution for idea INB-I-1146 (https://genesyscloud.idea
 ---
 This Genesys Cloud Developer Blueprint explains how Genesys Cloud trunk selection is handled by configuration on Sites. Number Plans and Outbound Routes ultimately determine the target trunk by matching the dialed number against a prioritized Number Plan, classifying it, and attempting the highest priority trunk matching the classification.
 
+Telephony Administrators can steer different types of calls through different trunks, assuming there is something unique to the dialed number scheme that can be matched against using one of the supported match types. Match types include Digit Length, E.164 Number List, Inter-Country, Intra-Country, Number List, or RegEx.
+
 ![Inbound Communicate call Genesys Cloud flow](images/ani-blacklist-workflow.png "Genesys Cloud Inbound Communicate Call")
-
-The following illustration shows the end-to-end user experience that this solution enables.
-
-![End-to-end user experience](images/ani-blacklist-demo.gif "End-to-end user experience")
 
 ## Solution components
 
 * **Genesys Cloud** - A suite of Genesys cloud services for enterprise-grade communications, collaboration, and contact center management. Contact center agents use the Genesys Cloud user interface.
 * **Genesys Cloud API** - A set of RESTful APIs that enables you to extend and customize your Genesys Cloud environment.
-* **Data Table** - Provides the ability to save blacklisted phone numbers from inbound calling.
-* **Data Action** - Provides the integration point to invoke a third-party REST web service or AWS lambda.
-* **Architect flows** - A flow in Architect, a drag and drop web-based design tool, dictates how Genesys Cloud handles inbound or outbound interactions.
-* **Triggers** - Provides the ability for a data action and architect workflow to work cohisively to perform the task.
+* **Trunks** - A telecommunications circuit from a carrier to a Genesys Cloud telephony connection. 
+* **Sites** - the home of a set of phones. The site defines the call classification rules and outbound routing rules as well as the telephony properties for dialing.
+
 
 ## Prerequisites
 
 ### Specialized knowledge
 
 * Administrator-level knowledge of Genesys Cloud
-* Expereince with REST API authentication
+* Telephony Configurations
 
 ### Genesys Cloud account
 
@@ -43,10 +40,10 @@ The following illustration shows the end-to-end user experience that this soluti
 
 1. Navigate to **Admin** > **Roles/Permissions** and click **Add Role**.
 2. Type a **Name** for your custom role. (Example: "Blacklist Callers")
-3. Search and select the **Conversation**>**Communication**>**Disconnect** permissions
+3. Search and select the **Telephony**>**All Permissions** permissions
 4. Click **Save** to assign the appropriate permissions to your custom role.
 
-   ![Add a custom role & set permissions](images/createRoles.gif "Add a custom role & set permissions")
+   ![Add a custom role & set permissions](images/permissions.png "Add a custom role & set permissions")
 
 ## Data Table
 
