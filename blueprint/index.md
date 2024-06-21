@@ -9,7 +9,7 @@ summary: |
 ---
 Genesys Cloud Trunk Selection Prefix
 ---
-This Genesys Cloud Developer Blueprint explains how Genesys Cloud trunk selection is handled by configuration on Sites. Number Plans and Outbound Routes ultimately determine the target trunk by matching the dialed number against a prioritized Number Plan, classifying it, and attempting the highest priority trunk matching the classification. This is a blueprint is a solution for idea INB-I-1146 (https://genesyscloud.ideas.aha.io/ideas/INB-I-1146).
+This Genesys Cloud Developer Blueprint explains how Genesys Cloud trunk selection is handled by configuration on Sites. Number Plans and Outbound Routes ultimately determine the target trunk by matching the dialed number against a prioritized Number Plan, classifying it, and attempting the highest priority trunk matching the classification. This is a blueprint is a solution for idea OTB-I-460 (https://genesyscloud.ideas.aha.io/ideas/OTB-I-460).
 
 Telephony Administrators can steer different types of calls through different trunks, assuming there is something unique to the dialed number scheme that can be matched against using one of the supported match types. Match types include Digit Length, E.164 Number List, Inter-Country, Intra-Country, Number List, or RegEx.
 
@@ -123,28 +123,41 @@ Trunks are put on routes within sites.
 
 ![Forced *99 Trunk Prefix Route](images/f99OR.png "Forced *99 Trunk Prefix Route")
 
+
 ### 3. Edit External Trunk
 
 If you want to add additional customization to the External Trunk, you can do the following:
 
 1. Click on the External Trunk Link
    ![External Trunk Link](images/externalTrunkLink.png "External Trunk Link")
+
 2. Click "Identity" dropdown
    ![External Trunk Link](images/identity.png "External Trunk Link")
+
 3. Under the Called Section, you can input "Match Regular Expression" and "Format Regular Expression".
+
 4. Click "+" to add the Regex 
    ![External Trunk Link](images/called.png "External Trunk Link")
+
 5. Save External Trunk
 
 **Example**: Adding the following two Regular Expressions to the External Trunk
 
 ![Forced *99 capture and handling](images/regex.png "Forced *99 capture and handling")
 
+NOTE: Add your RegEx and click "Save External Trunk" at the bottom of the page. 
 
-### You can now add numbers to the Blacklist Data Table under the ani column header and those callers will be disconnected when they try calling you.  
+### 3. Simulate Call and Test 
+
+If you want to test your external trunk and outbound routes, you can go to the "**Simulate Call**" tab:
+
+1. Input the string that passes the Number Plan RegEx and click "**Simulate Call**"
+
+![Simluate Call](images/simulatecall.png "Simulate Call")
+
 
 ## Additional resources
 
 * [Genesys Cloud API Explorer](https://developer.genesys.cloud/devapps/api-explorer "Opens the GC API Explorer") in the Genesys Cloud Developer Center
 * [Genesys Cloud notification triggers](https://developer.genesys.cloud/notificationsalerts/notifications/available-topics "Opens the Available topics page") in the Genesys Cloud Developer Center
-* The [ani-blacklist](https://github.com/GenesysCloudBlueprints/ani-blacklist) repository in GitHub
+* The [trunk-selection-prefix](https://github.com/GenesysCloudBlueprints/trunk-selection-prefix) repository in GitHub
