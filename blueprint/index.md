@@ -128,7 +128,7 @@ Trunks are put on routes within sites.
 If you want to add additional customization to the External Trunk, you can do the following:
 
 1. Click on the External Trunk Link
-   ![External Trunk Link](images/externalTrunklink.png "External Trunk Link")
+   ![External Trunk Link](images/externalTrunkLink.png "External Trunk Link")
 2. Click "Identity" dropdown
    ![External Trunk Link](images/identity.png "External Trunk Link")
 3. Under the Called Section, you can input "Match Regular Expression" and "Format Regular Expression".
