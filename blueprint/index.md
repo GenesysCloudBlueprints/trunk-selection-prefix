@@ -27,6 +27,7 @@ Telephony Administrators can steer different types of calls through different tr
 
 * Administrator-level knowledge of Genesys Cloud
 * Telephony Configurations
+* Have an established set Trunk to configure Sites
 
 ### Genesys Cloud account
 
@@ -43,22 +44,49 @@ Telephony Administrators can steer different types of calls through different tr
 
    ![Telephony Permissions](images/permissions.png "Telephony Permissions")
 
-## Data Table
+## Sites 
 
-### Create a Data Table
-1. Go to **Admin**>**Architect**>**Data Table**
-2. First you will want to create a data table. Example name can be “Blacklist”. 
-2. You will then primarily need to have the Reference Key set as "ani". 
-3. Click "Save"
+### Create a Site
+
+Trunks are put on routes within sites.
+
+1. Go to **Admin**>**Telephony**>**Sites**
+2. Create a site. For example purposes, I will create a site called “Trunk Selection Prefix”. 
+2. You can create special Number Plans.
+3. Save Number Plan
+4. You can specify Outbound Routes
+5. Save Outbound Routes
 
 
-### Add your Blacklist Numbers (to block incoming calls)
-1. Open your Data Table
-2. Press "+" in the top right corner of the screen. 
-3. Under the ani header column, you will store all the phone numbers you wish to block from incoming calls or queues.
-4. Click "Save" 
+### Create a Number Plan
+1. Click "New Number Plan" to create a new Number Plan
+2. Input Number Plan Name
+3. Input Match Type
+4. Input Match Exptression
+5. Input Normalized Number Expression
+6. Input Classification 
 
-   NOTE: The phone numbers need to be formatted using e.164 without the "+", for example; 17705551234. This also allows for CSV import without many formatting issues. More information on this below. 
+#### Here are two examples:
+
+Example 1: Forced *88 capture and handling (International)
+1. Created a new Number Plan called "Forced *88 capture and handling (International)" 
+2. Match Type set to "Regular Expression"
+3. Match Exptression set to "^(\*88)(.*)$"
+5. Normalized Number Expression set to "$1$2"
+6. Classification customized to "Forced Trunk Prefix *88". NOTE: You can input custom text and press ENTER if you want to custom classify. 
+7. Save Number Plan
+
+   ![Forced *88 capture and handling](images/forced88.png "Forced *88 capture and handling")
+
+Example 2: Forced *99 capture and handling (Domestic)
+1. Created a new Number Plan called "Forced *99 capture and handling (Domestic)" 
+2. Match Type set to "Regular Expression"
+3. Match Exptression set to "^(\*99)(.*)$"
+5. Normalized Number Expression set to "$1$2"
+6. Classification customized to "Forced Trunk Prefix *99". NOTE: You can input custom text and press ENTER if you want to custom classify. 
+7. Save Number Plan
+
+   ![Forced *99 capture and handling](images/forced99.png "Forced *99 capture and handling")
 
 
 ## Data Action
