@@ -6,13 +6,12 @@ icon: blueprint
 image: images/
 category: 4
 summary: |
+---
 This is a blueprint is a solution for idea INB-I-1146 (https://genesyscloud.ideas.aha.io/ideas/INB-I-1146). Genesys Cloud trunk selection is handled by configuration on Sites. Number Plans and Outbound Routes ultimately determine the target trunk by matching the dialed number against a prioritized Number Plan, classifying it, and attempting the highest priority trunk matching the classification.
 ---
 This Genesys Cloud Developer Blueprint explains how Genesys Cloud trunk selection is handled by configuration on Sites. Number Plans and Outbound Routes ultimately determine the target trunk by matching the dialed number against a prioritized Number Plan, classifying it, and attempting the highest priority trunk matching the classification.
 
 Telephony Administrators can steer different types of calls through different trunks, assuming there is something unique to the dialed number scheme that can be matched against using one of the supported match types. Match types include Digit Length, E.164 Number List, Inter-Country, Intra-Country, Number List, or RegEx.
-
-![Inbound Communicate call Genesys Cloud flow](images/ani-blacklist-workflow.png "Genesys Cloud Inbound Communicate Call")
 
 ## Solution components
 
@@ -36,14 +35,13 @@ Telephony Administrators can steer different types of calls through different tr
 
 ## Configure Genesys Cloud
 
-### Create a custom role & assign permissions to use with Genesys Cloud OAuth clients
+### Assign permissions to access Telephony Configurations
 
-1. Navigate to **Admin** > **Roles/Permissions** and click **Add Role**.
-2. Type a **Name** for your custom role. (Example: "Blacklist Callers")
-3. Search and select the **Telephony**>**All Permissions** permissions
-4. Click **Save** to assign the appropriate permissions to your custom role.
+1. Navigate to **Admin** > **Roles/Permissions**.
+2. Ensure you have **Telephony**>**All Permissions** permission.
+3. Click **Save** to assign the appropriate permissions to your role.
 
-   ![Add a custom role & set permissions](images/permissions.png "Add a custom role & set permissions")
+   ![Telephony Permissions](images/permissions.png "Telephony Permissions")
 
 ## Data Table
 
@@ -53,7 +51,6 @@ Telephony Administrators can steer different types of calls through different tr
 2. You will then primarily need to have the Reference Key set as "ani". 
 3. Click "Save"
 
-   ![create a data table](images/datatable.gif "create a data table")
 
 ### Add your Blacklist Numbers (to block incoming calls)
 1. Open your Data Table
@@ -63,7 +60,6 @@ Telephony Administrators can steer different types of calls through different tr
 
    NOTE: The phone numbers need to be formatted using e.164 without the "+", for example; 17705551234. This also allows for CSV import without many formatting issues. More information on this below. 
 
-   ![End-to-end user experience](images/add-number-to-blacklist.gif "End-to-end user experience")
 
 ## Data Action
 
@@ -82,8 +78,6 @@ To create an OAuth Client in Genesys Cloud:
 2. Enter the name (Example: Disconnect Interaction) for the OAuth client and select **Client Credentials** as the grant type. Click the **Roles** tab and assign the required role for the OAuth client.
 
 3. Click **Save**. Copy the client ID and the client secret values for later use.
-
-   ![End-to-end user experience](images/OAuth.gif "End-to-end user experience")
 
    **Note:** Ensure that you **copy the client ID and client secret values** for each of the OAuth clients.
 
