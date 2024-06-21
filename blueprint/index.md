@@ -46,7 +46,7 @@ Telephony Administrators can steer different types of calls through different tr
 
 ## Sites 
 
-### Create a Site
+### 1. Create a Site
 
 Trunks are put on routes within sites.
 
@@ -58,7 +58,7 @@ Trunks are put on routes within sites.
 5. Save Outbound Routes
 
 
-### Create a Number Plan
+### 2. Create a Number Plan
 1. Click "New Number Plan" to create a new Number Plan
 2. Input Number Plan Name
 3. Input Match Type
@@ -68,7 +68,7 @@ Trunks are put on routes within sites.
 
 #### Here are two examples:
 
-Example 1: Forced *88 capture and handling (International)
+**Example 1**: Forced *88 capture and handling (International)
 1. Created a new Number Plan called "Forced *88 capture and handling (International)" 
 2. Match Type set to "Regular Expression"
 3. Match Exptression set to "^(\*88)(.*)$"
@@ -76,9 +76,9 @@ Example 1: Forced *88 capture and handling (International)
 6. Classification customized to "Forced Trunk Prefix *88". NOTE: You can input custom text and press ENTER if you want to custom classify. 
 7. Save Number Plan
 
-   ![Forced *88 capture and handling](images/forced88.png "Forced *88 capture and handling")
+![Forced *88 capture and handling](images/forced88.png "Forced *88 capture and handling")
 
-Example 2: Forced *99 capture and handling (Domestic)
+**Example 2**: Forced *99 capture and handling (Domestic)
 1. Created a new Number Plan called "Forced *99 capture and handling (Domestic)" 
 2. Match Type set to "Regular Expression"
 3. Match Exptression set to "^(\*99)(.*)$"
@@ -86,115 +86,60 @@ Example 2: Forced *99 capture and handling (Domestic)
 6. Classification customized to "Forced Trunk Prefix *99". NOTE: You can input custom text and press ENTER if you want to custom classify. 
 7. Save Number Plan
 
-   ![Forced *99 capture and handling](images/forced99.png "Forced *99 capture and handling")
+![Forced *99 capture and handling](images/forced99.png "Forced *99 capture and handling")
 
 
-## Data Action
+### 3. Create Outbound Routes
+1. Click "New Outbound Route" to create a new Outbound Route
+2. Input Outbound Route Name
+3. Input Description (optional)
+4. Toggle State (Enabled/Disabled)
+5. Input Classification Tag
+6. Select Distribution Pattern: Sequentional or Random
+7. Select External Trunks 
+8. Save Outbound Route
 
-You will need to create a Genesys Cloud data action that will be used for disconnecting interactions. This can be called “Disconnect interaction”. 
+#### Here are two examples:
 
-### Create an OAuth client for use with a Genesys Cloud data action integration
+**Example 1**: Forced *88 Trunk Prefix Route (International)
+1. Created a new Number Plan called "Forced *88 Trunk Prefix Route (International)" 
+2. Description - left it blank
+3. State: Enabled
+5. Classification tag set to "Forced Trunk Prefix *88" 
+6. Distribution Pattern: Sequential 
+7. External Trunk: "BYOC Cloud Carrier (West Coast) 
+8. Save Outbound Routes
 
-To enable a Genesys Cloud data action to make public API requests on behalf of your Genesys Cloud organization, use an OAuth client to configure authentication with Genesys Cloud.
+![Forced *88 Trunk Prefix Route](images/f88OR.png "Forced *88 Trunk Prefix Route")
 
-Create an OAuth client to use with the data action integration with a custom role.
+**Example 2**: Forced *99 Trunk Prefix Route (International)
+1. Created a new Number Plan called "Forced *88 Trunk Prefix Route (International)" 
+2. Description - left it blank
+3. State: Enabled
+5. Classification tag set to "Forced Trunk Prefix *99" 
+6. Distribution Pattern: Sequential 
+7. External Trunk: "BYOC Cloud Carrier (West Coast) 
+8. Save Outbound Routes
 
-To create an OAuth Client in Genesys Cloud:
+![Forced *99 Trunk Prefix Route](images/f99OR.png "Forced *99 Trunk Prefix Route")
 
-1. Navigate to **Admin** > **Integrations** > **OAuth** and click **Add Client**.
+### 3. Edit External Trunk
 
-2. Enter the name (Example: Disconnect Interaction) for the OAuth client and select **Client Credentials** as the grant type. Click the **Roles** tab and assign the required role for the OAuth client.
+If you want to add additional customization to the External Trunk, you can do the following:
 
-3. Click **Save**. Copy the client ID and the client secret values for later use.
+1. Click on the External Trunk Link
+   ![External Trunk Link](images/externalTrunklink.png "External Trunk Link")
+2. Click "Identity" dropdown
+   ![External Trunk Link](images/identity.png "External Trunk Link")
+3. Under the Called Section, you can input "Match Regular Expression" and "Format Regular Expression".
+4. Click "+" to add the Regex 
+   ![External Trunk Link](images/called.png "External Trunk Link")
+5. Save External Trunk
 
-   **Note:** Ensure that you **copy the client ID and client secret values** for each of the OAuth clients.
+**Example**: Adding the following two Regular Expressions to the External Trunk
 
-### Add Genesys Cloud data action integration
+![Forced *99 capture and handling](images/regex.png "Forced *99 capture and handling")
 
-Add a Genesys cloud data action integration for each OAuth client being used with this blueprint to call the Genesys Cloud public API to:
-* Terminate the call of an inbound blacklisted caller
-
-To create a data action integration in Genesys Cloud:
-
-1. Navigate to **Admin** > **Integrations** > **Integrations** and install the **Genesys Cloud Data Actions** integration. For more information, see [About the data actions integrations](https://help.mypurecloud.com/?p=209478 "Opens the About the data actions integrations article") in the Genesys Cloud Resource Center.
-
-2. Enter a name for the Genesys Cloud data action, such as "Disconnect Interaction" in this blueprint solution.
-
-3. On the **Configuration** tab, click **Credentials** and then click **Configure**.
-
-4. Enter the client ID and client secret that you saved for the Public API (OAuth Client 1). Click **OK** and save the data action.
-
-5. Navigate to the Integrations page and set the data action integration to **Active**.
-
-   ![create data action](images/create-data-action.gif "create data action")
-
-
-### Import the Genesys Cloud data actions
-
-1. Download the `Disconnect-Interaction.json` JSON file from the [ani-blacklist](https://github.com/GenesysCloudBlueprints/ani-blacklist) GitHub repository.
-2. In Genesys Cloud, navigate to **Admin** > **Integrations** > **Actions** and click **Import**.
-3. Select the `Disconnect-Interaction.json` file and associate with "Disconnect Interaction" data action integration, which uses the Disconnect Interaction Public API OAuth client.
-4. click **Import Action**.
-5. Click **Save & Publish**
-
-   ![create data action](images/import-data-actions.gif "create data action")
-
-## Architect 
-
-### Import the Architect workflows
-
-This solution includes one Architect workflow that uses one [data action](#add-genesys-cloud-data-action-integrations "Goes to the Add a web services data actions integration section"). 
-
-* The **Blacklist.i3WorkFlow** workflow is triggered when a blacklisted caller dials to Genesys Cloud communicate user. This workflow terminates an inbound phone call if it matches the phone number from the Data Table. 
-
-First import this workflow to your Genesys Cloud organization:
-
-1. Download the `Blacklist.i3WorkFlow` file from the [ani-blacklist repo](https://github.com/GenesysCloudBlueprints/ani-blacklist) GitHub repository.
-
-2. In Genesys Cloud, navigate to **Admin** > **Architect** > **Flows:Workflow** and click **Add**.
-
-3. Enter a name for the workflow and click **Create Flow**.
-
-4. From the **Save** menu, click **Import**.
-
-5. Select the downloaded **Blacklist.i3WorkFlow** file and click **Import**.
-
-6. Review your workflow. Click **Save** and then click **Publish**.
-   
-   ![Import the workflow](images/architect-workflows.gif "Import the workflow")
-
-   **Note:** If you imported the `Blacklist.i3WorkFlow` file, your workflow will look like the flow below. 
-
-   ![full architect workflow](images/full-architect-workflow.gif "full architect workflow")
-
-## Triggers
-
-Create the trigger that invokes the created Architect workflow.
-
-1. From Admin Home, search for **Triggers** and navigate to the Triggers list.
-
-2. From the Triggers list, click **Add Trigger**
-
-3. From the Add New Trigger modal, name your trigger and click **Add**
-
-4. From the Trigger single view input **Topic Name**, **Workflow Target**, and **Data Format** as mentioned in the table below.  
-
-| Topic Name | Workflow Target | Data Format |
-|---------------------------------------------------|-----------|--------------------|
-| v2.detail.events.conversation.{id}.customer.start | Blacklist | TopLevelPrimitives |
-
-5. Click **Add Condition**.  
-   NOTE: For more information, see [Available Topics](https://developer.genesys.cloud/notificationsalerts/notifications/available-topics "Opens the Available Topics article") in the Genesys Cloud Developer Center. Using the notification monitoring tool in the Developer Center, you can watch the notifications happen.
-
-6. From the Trigger single view, input **JSON Path**, **Operator**, and **Value** as mentioned in the table below. 
-
-| Topic Name | Workflow Target | Data Format |
-|------------|-----------------|-------------|
-| mediaType | Equals(==) | VOICE |
-
-7. Click **Save**.
-
-   ![Configure Trigger](images/trigger.gif "Configure Trigger")
 
 ### You can now add numbers to the Blacklist Data Table under the ani column header and those callers will be disconnected when they try calling you.  
 
